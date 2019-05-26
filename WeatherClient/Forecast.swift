@@ -1,9 +1,11 @@
+// This file was generated from JSON Schema using quicktype, do not modify it directly.
 // To parse the JSON, add this file to your project and do:
 //
 //   let forecast = try Forecast(json)
 
 import Foundation
 
+// MARK: - Forecast
 struct Forecast: Codable {
     let latitude, longitude: Double
     let timezone: String
@@ -15,86 +17,7 @@ struct Forecast: Codable {
     let offset: Int
 }
 
-struct Currently: Codable {
-    let time: Int
-    let summary, icon: String
-    let nearestStormDistance, nearestStormBearing: Int?
-    let precipIntensity, precipProbability, temperature, apparentTemperature: Double
-    let dewPoint, humidity, pressure, windSpeed: Double
-    let windGust: Double
-    let windBearing: Int
-    let cloudCover: Double
-    let uvIndex: Int
-    let visibility, ozone: Double
-    let precipType: String?
-}
-
-struct Daily: Codable {
-    let summary, icon: String
-    let data: [DailyDatum]
-}
-
-struct DailyDatum: Codable {
-    let time: Int
-    let summary, icon: String
-    let sunriseTime, sunsetTime: Int
-    let moonPhase, precipIntensity, precipIntensityMax: Double
-    let precipIntensityMaxTime: Int
-    let precipProbability: Double
-    let precipType: String
-    let temperatureHigh: Double
-    let temperatureHighTime: Int
-    let temperatureLow: Double
-    let temperatureLowTime: Int
-    let apparentTemperatureHigh: Double
-    let apparentTemperatureHighTime: Int
-    let apparentTemperatureLow: Double
-    let apparentTemperatureLowTime: Int
-    let dewPoint, humidity, pressure, windSpeed: Double
-    let windGust: Double
-    let windGustTime, windBearing: Int
-    let cloudCover: Double
-    let uvIndex, uvIndexTime: Int
-    let visibility, ozone, temperatureMin: Double
-    let temperatureMinTime: Int
-    let temperatureMax: Double
-    let temperatureMaxTime: Int
-    let apparentTemperatureMin: Double
-    let apparentTemperatureMinTime: Int
-    let apparentTemperatureMax: Double
-    let apparentTemperatureMaxTime: Int
-}
-
-struct Flags: Codable {
-    let sources: [String]
-    let nearestStation: Double
-    let units: String
-
-    enum CodingKeys: String, CodingKey {
-        case sources
-        case nearestStation = "nearest-station"
-        case units
-    }
-}
-
-struct Hourly: Codable {
-    let summary, icon: String
-    let data: [Currently]
-}
-
-struct Minutely: Codable {
-    let summary, icon: String
-    let data: [MinutelyDatum]
-}
-
-struct MinutelyDatum: Codable {
-    let time: Int
-    let precipIntensity, precipProbability: Double
-    let precipIntensityError: Double?
-    let precipType: String?
-}
-
-// MARK: Convenience initializers and mutators
+// MARK: Forecast convenience initializers and mutators
 
 extension Forecast {
     init(data: Data) throws {
@@ -144,6 +67,23 @@ extension Forecast {
         return String(data: try self.jsonData(), encoding: encoding)
     }
 }
+
+// MARK: - Currently
+struct Currently: Codable {
+    let time: Int
+    let summary, icon: String
+    let nearestStormDistance, nearestStormBearing: Int?
+    let precipIntensity, precipProbability, temperature, apparentTemperature: Double
+    let dewPoint, humidity, pressure, windSpeed: Double
+    let windGust: Double
+    let windBearing: Int
+    let cloudCover: Double
+    let uvIndex: Int
+    let visibility, ozone: Double
+    let precipType: String?
+}
+
+// MARK: Currently convenience initializers and mutators
 
 extension Currently {
     init(data: Data) throws {
@@ -216,6 +156,14 @@ extension Currently {
     }
 }
 
+// MARK: - Daily
+struct Daily: Codable {
+    let summary, icon: String
+    let data: [DailyDatum]
+}
+
+// MARK: Daily convenience initializers and mutators
+
 extension Daily {
     init(data: Data) throws {
         self = try newJSONDecoder().decode(Daily.self, from: data)
@@ -252,6 +200,40 @@ extension Daily {
         return String(data: try self.jsonData(), encoding: encoding)
     }
 }
+
+// MARK: - DailyDatum
+struct DailyDatum: Codable {
+    let time: Int
+    let summary, icon: String
+    let sunriseTime, sunsetTime: Int
+    let moonPhase, precipIntensity, precipIntensityMax: Double
+    let precipIntensityMaxTime: Int
+    let precipProbability: Double
+    let precipType: String
+    let temperatureHigh: Double
+    let temperatureHighTime: Int
+    let temperatureLow: Double
+    let temperatureLowTime: Int
+    let apparentTemperatureHigh: Double
+    let apparentTemperatureHighTime: Int
+    let apparentTemperatureLow: Double
+    let apparentTemperatureLowTime: Int
+    let dewPoint, humidity, pressure, windSpeed: Double
+    let windGust: Double
+    let windGustTime, windBearing: Int
+    let cloudCover: Double
+    let uvIndex, uvIndexTime: Int
+    let visibility, ozone, temperatureMin: Double
+    let temperatureMinTime: Int
+    let temperatureMax: Double
+    let temperatureMaxTime: Int
+    let apparentTemperatureMin: Double
+    let apparentTemperatureMinTime: Int
+    let apparentTemperatureMax: Double
+    let apparentTemperatureMaxTime: Int
+}
+
+// MARK: DailyDatum convenience initializers and mutators
 
 extension DailyDatum {
     init(data: Data) throws {
@@ -362,6 +344,21 @@ extension DailyDatum {
     }
 }
 
+// MARK: - Flags
+struct Flags: Codable {
+    let sources: [String]
+    let nearestStation: Double
+    let units: String
+
+    enum CodingKeys: String, CodingKey {
+        case sources
+        case nearestStation = "nearest-station"
+        case units
+    }
+}
+
+// MARK: Flags convenience initializers and mutators
+
 extension Flags {
     init(data: Data) throws {
         self = try newJSONDecoder().decode(Flags.self, from: data)
@@ -398,6 +395,14 @@ extension Flags {
         return String(data: try self.jsonData(), encoding: encoding)
     }
 }
+
+// MARK: - Hourly
+struct Hourly: Codable {
+    let summary, icon: String
+    let data: [Currently]
+}
+
+// MARK: Hourly convenience initializers and mutators
 
 extension Hourly {
     init(data: Data) throws {
@@ -436,6 +441,14 @@ extension Hourly {
     }
 }
 
+// MARK: - Minutely
+struct Minutely: Codable {
+    let summary, icon: String
+    let data: [MinutelyDatum]
+}
+
+// MARK: Minutely convenience initializers and mutators
+
 extension Minutely {
     init(data: Data) throws {
         self = try newJSONDecoder().decode(Minutely.self, from: data)
@@ -472,6 +485,16 @@ extension Minutely {
         return String(data: try self.jsonData(), encoding: encoding)
     }
 }
+
+// MARK: - MinutelyDatum
+struct MinutelyDatum: Codable {
+    let time: Int
+    let precipIntensity, precipProbability: Double
+    let precipIntensityError: Double?
+    let precipType: String?
+}
+
+// MARK: MinutelyDatum convenience initializers and mutators
 
 extension MinutelyDatum {
     init(data: Data) throws {
@@ -514,7 +537,9 @@ extension MinutelyDatum {
     }
 }
 
-fileprivate func newJSONDecoder() -> JSONDecoder {
+// MARK: - Helper functions for creating encoders and decoders
+
+func newJSONDecoder() -> JSONDecoder {
     let decoder = JSONDecoder()
     if #available(iOS 10.0, OSX 10.12, tvOS 10.0, watchOS 3.0, *) {
         decoder.dateDecodingStrategy = .iso8601
@@ -522,7 +547,7 @@ fileprivate func newJSONDecoder() -> JSONDecoder {
     return decoder
 }
 
-fileprivate func newJSONEncoder() -> JSONEncoder {
+func newJSONEncoder() -> JSONEncoder {
     let encoder = JSONEncoder()
     if #available(iOS 10.0, OSX 10.12, tvOS 10.0, watchOS 3.0, *) {
         encoder.dateEncodingStrategy = .iso8601
