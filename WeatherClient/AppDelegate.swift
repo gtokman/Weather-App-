@@ -7,18 +7,34 @@
 //
 
 import UIKit
+import Moya
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     let locationService = LocationService()
+    let forecastProvider = MoyaProvider<ForecastProvider>()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-        locationService.newestLocation = { location in
-            guard let location = location else { return }
-            print("Location is: \(location)")
+        
+        let apiKey = Bundle.main.object(forInfoDictionaryKey: "DARKSKY_API_KEY") as! String
+        
+        // Forecast request
+        forecastProvider.request(.forecast(apiKey, 42.3601, -71.0589)) { (result) in
+            switch result {
+            case .success(let response):
+               let forecast = try? Forecast(data: response.data)
+               print("Forcast: \n\n", forecast)
+            case .failure(let error):
+                print("Network request failed: \(error)")
+            }
+        }
+
+        // Location service callbacks
+        locationService.newestLocation = { coordinate in
+            guard let coordinate = coordinate else { return }
+            print("Location is: \(coordinate)")
         }
         locationService.statusUpdated = { [weak self] status in
             if status == .authorizedWhenInUse {
